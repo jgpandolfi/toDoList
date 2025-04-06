@@ -35,27 +35,33 @@ formAdicionarTarefa.addEventListener("submit", function(event) {
 // Função para adicionar tarefa na lista e no DOM
 function adicionarTarefa(tarefaTexto, concluida = false) {
     const tarefaItem = document.createElement("li");
+    
     const checkbox = document.createElement("input");
     checkbox.type = "checkbox";
     checkbox.classList.add("checkbox-tarefa");
     checkbox.checked = concluida;
-
-    if (concluida) { // Corrigir aqui de "conclida" para "concluida"
-        tarefaItem.style.textDecoration = "line-through"; // Riscar texto
+    
+    if (concluida) {
+        tarefaItem.style.textDecoration = "line-through";
     }
-
+    
     checkbox.addEventListener("change", function() {
         if (checkbox.checked) {
-            tarefaItem.style.textDecoration = "line-through"; // Riscar texto
+            tarefaItem.style.textDecoration = "line-through";
         } else {
-            tarefaItem.style.textDecoration = "none"; // Remover o risco
+            tarefaItem.style.textDecoration = "none";
         }
         salvarTarefasNoLocalStorage();
     });
-
+    
     tarefaItem.appendChild(checkbox);
-    tarefaItem.appendChild(document.createTextNode(tarefaTexto));
-
+    
+    // Criar um span para o texto da tarefa
+    const textoSpan = document.createElement("span");
+    textoSpan.classList.add("texto-tarefa");
+    textoSpan.textContent = tarefaTexto;
+    tarefaItem.appendChild(textoSpan);
+    
     const botaoRemover = document.createElement("button");
     botaoRemover.textContent = "Remover";
     botaoRemover.classList.add("btn-remover");
@@ -63,7 +69,7 @@ function adicionarTarefa(tarefaTexto, concluida = false) {
         tarefaItem.remove();
         salvarTarefasNoLocalStorage();
     });
-
+    
     tarefaItem.appendChild(botaoRemover);
     listaTarefas.appendChild(tarefaItem);
     atualizarBotaoLimpar();
@@ -81,8 +87,8 @@ function carregarTarefas() {
 function salvarTarefasNoLocalStorage() {
     const tarefas = Array.from(listaTarefas.children).map(tarefa => {
         return {
-            texto: tarefa.childNodes[1].textContent,
-            concluida: tarefa.childNodes[0].checked
+            texto: tarefa.querySelector('.texto-tarefa').textContent,
+            concluida: tarefa.querySelector('.checkbox-tarefa').checked
         };
     });
     localStorage.setItem("tarefas", JSON.stringify(tarefas));

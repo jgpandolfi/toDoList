@@ -72,12 +72,21 @@ header h1 {
     transition: transform 0.2s ease, box-shadow 0.2s ease;
     display: flex; /* Usa flexbox para o layout */
     justify-content: space-between; /* Espaça os itens ao longo da linha */
-    align-items: center; /* Alinha os itens verticalmente ao centro */
+    align-items: center; /* Alinha todos os itens ao centro verticalmente */
+    flex-wrap: wrap; /* Permite quebra de linha se necessário */
 }
 
 #to-do-list li:hover {
     transform: scale(1.02);
     box-shadow: 0 2px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Estilo para o texto da tarefa */
+#to-do-list li span.texto-tarefa {
+    flex: 1;
+    padding-left: 10px;
+    word-break: break-word; /* Permite quebra de palavras longas */
+    min-width: 0; /* Permite que o texto encolha abaixo da largura mínima */
 }
 
 /* Estilo do formulário para adicionar tarefas */
@@ -141,6 +150,13 @@ footer a:hover {
     transition: background-color 0.3s ease;
 }
 
+/* Estilo para o botão remover */
+.btn-remover {
+    flex-shrink: 0; /* Impede que o botão encolha */
+    align-self: flex-start; /* Alinha o botão ao topo */
+    margin-top: 0; /* Ajuste para alinhamento visual */
+}
+
 .btn-remover:hover, #limpar-tudo:hover {
     background-color: #e53935;
 }
@@ -156,6 +172,9 @@ footer a:hover {
     cursor: pointer;
     outline: none;
     position: relative; /* Necessário para posicionar o sinal de verificação */
+    flex-shrink: 0; /* Impede que o checkbox encolha */
+    align-self: flex-start; /* Alinha o checkbox ao topo */
+    margin-top: 3px; /* Pequeno ajuste para alinhamento visual */
 }
 
 /* Estilo para quando a checkbox está marcada */
